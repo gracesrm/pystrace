@@ -70,7 +70,7 @@ re_extract_resumed \
 
 global re_extract_signal
 re_extract_signal \
-		= re.compile(r"\s*(\d+\.\d+) --- (\w+) \{(.)*\} ---$")
+		= re.compile(r"\s*(\d+\.\d+) --- (\w+) \(\w+\s*\w+\) (.*) ---$") #= re.compile(r"\s*(\d+\.\d+) --- (\w+) \{(.)*\} ---$")
 
 global re_extract_exit
 re_extract_exit \
@@ -78,8 +78,8 @@ re_extract_exit \
 
 global re_extract_kill
 re_extract_kill \
-		= re.compile(r"\s*(\d+\.\d+) \+\+\+ killed by ([\w]+) \+\+\+$")
-
+		= re.compile(r"\s*(\d+\.\d+) \+\+\+ killed by (\w+) \(\w+\s*\w+\) \+\+\+$")
+		#= re.compile(r"\s*(\d+\.\d+) \+\+\+ killed by ([\w]+) \+\+\+$")
 global re_extract_arguments_and_return_value_none
 re_extract_arguments_and_return_value_none \
 		= re.compile(r"\((.*)\)[ \t]*= (\?)$")
@@ -313,7 +313,6 @@ class StraceInputStream:
 				signal_name = r.group(2)
 				arguments = self.__parse_arguments(r.group(3))
 				return StraceEntry(pid, timestamp, False, 0, signal_name, arguments, 0)
-		
 		# Exit/Kill
 		
 		if line.endswith("+++"):
@@ -322,7 +321,6 @@ class StraceInputStream:
 				timestamp = Decimal(r.group(1))
 				return_value = r.group(2)
 				return StraceEntry(pid, timestamp, False, 0, "EXIT", [], return_value)
-
 			r = re_extract_kill.match(line, pos_start)
 			if r is not None:
 				timestamp = Decimal(r.group(1))
@@ -376,12 +374,9 @@ class StraceInputStream:
 			else:
 				#sys.stderr.write("Offending line: %s\n" % line)
 				raise Exception("Invalid line (line %d)" % self.line_no)
-		
-		
 		# Extract the return value
 		
-		m_args_and_result \
-		  = re_extract_arguments_and_return_value_ok.match(args_and_result_str)
+		m_args_and_result = re_extract_arguments_and_return_value_ok.match(args_and_result_str)
 		if m_args_and_result != None:
 			return_value = int(m_args_and_result.group(2))
 			arguments_str = m_args_and_result.group(1)
