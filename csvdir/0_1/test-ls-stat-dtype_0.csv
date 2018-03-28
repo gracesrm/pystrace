@@ -1,0 +1,7 @@
+TIMESTAMP,SYSCALL,CATEGORY,SPLIT,ARGC,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,RESULT,ELAPSED
+"1521760798.906133","execve",,0,3,"""/usr/bin/make""","[""make"", ""-j"", ""1"", ""check"", ""TEST=test/ls/stat-dtype.sh""]","[/* 51 vars */]",,,,0,
+"1521760798.906354","brk",,0,1,"0",,,,,,"0xa37000",
+"1521760798.906421","access","IO",0,2,"""/etc/ld.so.nohwcap""","F_OK",,,,,"-1",
+"1521760798.906445","mmap","IO",0,6,"NULL","8192","PROT_READ|PROT_WRITE","MAP_PRIVATE|MAP_ANONYMOUS","-1","0","-1",
+"1521760798.906465","writev",,0,3,"2","[{""make"", 4}, {"": "", 2}, {""error while loading shared libra""..., 36}, {"": "", 2}, {"""", 0}, {"""", 0}, {""cannot create cache for search p""..., 35}, {"": "", 2}, {""Cannot allocate memory"", 22}, {""\n"", 1}]","10",,,,104,
+"1521760798.906589","exit_group",,0,1,"127",,,,,,,
