@@ -18,23 +18,29 @@ def Start(stand_dir, unpred_dir, c):
 
 			unpred_src = os.path.join(rt, strf_unp)
 			subdir = unpred_src.split('/')[-2] + '/'
-			# print subdir
+			# print subdir    #  0_0/  stand/
+			if "stand" in subdir:
+				continue
 
 			if strf_unp[-4:] == ".str":
-				print strf_unp
+				# print unpred_src   # strdir/0_0/xxx_0.str
 				strf_std = stand_dir + strf_unp[:-6] + ".str"
-				# print strf_std
-				with open(strf_std,'r') as str_fd, open(os.path.join(rt,unpred_src), 'r') as str_unp_fd:
+				# print strf_std   # strdir/stand/xxx.str
+
+				with open(strf_std,'r') as str_fd, open(unpred_src, 'r') as str_unp_fd:
 					ref = str_fd.readlines()[int(c)]
 					comp = str_unp_fd.readline()
 					try:
 						dis = editdistance.eval(ref, comp)
+						ratio = 1- dis/float(max(len(ref), len(comp)))
+						# print str(ratio)
 					except:
 						pass
-					dest_file = "/home/ruimin/pystrace/disdir/" + subdir + strf_unp[:-6] + ".dis"	
+					dest_file = "/home/ruimin/pystrace/disdir/" + subdir + strf_unp[:-6] + ".dis"
+					dest_file_rt = "/home/ruimin/pystrace/ratiodir/" + subdir + strf_unp[:-6] + ".rt"
 					# print dest_file
-					with open(dest_file,'ab') as f:
-						f.write(str(dis) + '\n')
+					with open(dest_file_rt,'ab') as f:
+						f.write(str(ratio) + '\n')
 
 
 #

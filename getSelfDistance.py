@@ -21,19 +21,31 @@ def Start(subdir, c):
 					lines = str_fd.readlines()
 					ref = lines[int(c)]
 					res = list()
+					res_rt = list()
 					for line in lines:
 						dis = editdistance.eval(ref,line)
+						ratio = 1- dis/float(max(len(ref),len(line)))
 						res.append(dis)			
+						res_rt.append(ratio)
 					mean = np.mean(res)
 					std = np.std(res)
+					mean_rt = np.mean(res_rt)
+					std_rt = np.std(res_rt)
+
 					dest_file = "/home/ruimin/pystrace/disdir/" + subdir + "/" + strfile[:-4] + ".dis"	
+					dest_file_rt = "/home/ruimin/pystrace/ratiodir/" + subdir + "/" + strfile[:-4] + ".rt"	
 #					os.system("echo " + res_str + " >> " + dest_file)
-					with open(dest_file,'ab') as f:
-						pickle.dump(res,f)
+					with open(dest_file,'ab') as f, open(dest_file_rt,'ab') as f_rt:
+						#pickle.dump(res,f)
+						pickle.dump(res_rt,f_rt)
 						line1 = "MEAN:" + str(mean) + "\n"
 						line2 = "STD:" + str(std) + "\n"
-						f.write(line1)
-						f.write(line2)
+						line1_rt = "MEAN:" + str(mean_rt) + "\n"
+						line2_rt = "STD:" + str(std_rt) + "\n"
+						#f.write(line1)
+						#f.write(line2)
+						f_rt.write(line1_rt)
+						f_rt.write(line2_rt)
 			
 
 
