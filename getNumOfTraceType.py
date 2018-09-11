@@ -5,7 +5,8 @@ import csv
 
 
 def Start():
-	csv_list = "/home/ruimin/pystrace/csvdir/" # recursive=Tru
+	#csv_list = "/home/ruimin/pystrace/csvdir/" # recursive=Tru
+        csv_list = "/home/ruimin/mollitiam/Result2/Apps_stand/"
 	syscall_dict = dict()
 
 	for root, dirs, csvfiles in os.walk(csv_list):
@@ -22,7 +23,7 @@ def Start():
 						else:
 							syscall_dict[syscall] += 1
 
-	with open('syscall_freq.csv','wb') as f:
+	with open('syscall_freq2.csv','wb') as f:
 		writer =csv.writer(f)
 		for key, value in syscall_dict.items():
 			writer.writerow([key,value])

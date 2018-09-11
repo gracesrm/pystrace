@@ -417,7 +417,7 @@ class StraceInputStream:
 				return_value = None
 				arguments_str = m_args_and_result.group(1)
 		if m_args_and_result == None:
-				raise Exception("Invalid line (line %d)" % self.line_no)
+				pass #raise Exception("Invalid line (line %d)" % self.line_no)
 		
 		
 		# Extract the arguments

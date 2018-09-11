@@ -131,37 +131,46 @@ def usage():
 #
 # Arguments:
 #   argv - the list of command-line arguments, excluding the executable name
+#
+def main(argv):
 
-from multiprocessing import Process, Queue
-from glob import glob
-import os
-def convert(task_queue):
-    while not task_queue.empty():
-        input_file = task_queue.get()
-        print(input_file)
-        output_file = input_file.split('.')[0]+'.csv'
-        if os.path.exists(output_file):
-            continue
-        try:
-            convert2csv(input_file, output_file)
-        except IOError as e:
-            sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), e))
-            sys.exit(1)
+	input_file = None
+	output_file = None
+	
+
+	# Parse the command-line options
+
+	try:
+		options, remainder = getopt.gnu_getopt(argv, 'ho:',
+			['help', 'output='])
+		
+		for opt, arg in options:
+			if opt in ('-h', '--help'):
+				usage()
+				return
+			elif opt in ('-o', '--output'):
+				output_file = arg
+		
+		if len(remainder) > 1:
+			raise Exception("Too many options")
+		elif len(remainder) == 1:
+			input_file = remainder[0]
+	except Exception as e:
+		sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), e))
+		sys.exit(1)
+	
+	
+	# Convert to .csv
+
+	try:
+		convert2csv(input_file, output_file)
+	except IOError as e:
+		sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), e))
+		sys.exit(1)
 
 
-folder = glob("/mnt/data/xiaoyong/mollitiam/unixbench0812/*.tr")
-
-task_queue = Queue()
-for x in folder:
-    task_queue.put(x)
-
-preprocesser_num = 20
-print("parallel.")
-jobs = []
-for _ in range(preprocesser_num):
-    p = Process(target=convert, args=(task_queue, ))
-    jobs.append(p)
-    p.start()
-
-for job in jobs:
-    job.join()
+#
+# Entry point to the application
+#
+if __name__ == "__main__":
+	main(sys.argv[1:])

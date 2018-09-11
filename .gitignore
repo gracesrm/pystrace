@@ -1,2 +1,6 @@
 trdir/
+csvdir/
+preliminary_unpred/
+ratiodir/
+strdir/
 *.pyc
