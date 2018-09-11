@@ -3,4 +3,6 @@ csvdir/
 preliminary_unpred/
 ratiodir/
 strdir/
+*.csv
+*.png
 *.pyc
