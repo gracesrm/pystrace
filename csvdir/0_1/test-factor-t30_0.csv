@@ -1,7 +1,0 @@
-TIMESTAMP,SYSCALL,CATEGORY,SPLIT,ARGC,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,RESULT,ELAPSED
-"1521889849.899748","execve",,0,3,"""/usr/bin/make""","[""make"", ""-j"", ""1"", ""check"", ""TEST=test/factor/t30.sh""]","[/* 51 vars */]",,,,0,
-"1521889849.900241","brk",,0,1,"0",,,,,,"0x182f000",
-"1521889849.900393","access","IO",0,2,"""/etc/ld.so.nohwcap""","F_OK",,,,,"-1",
-"1521889849.900444","mmap","IO",0,6,"NULL","8192","PROT_READ|PROT_WRITE","MAP_PRIVATE|MAP_ANONYMOUS","-1","0","-1",
-"1521889849.900493","writev",,0,3,"2","[{""make"", 4}, {"": "", 2}, {""error while loading shared libra""..., 36}, {"": "", 2}, {"""", 0}, {"""", 0}, {""cannot create cache for search p""..., 35}, {"": "", 2}, {""Cannot allocate memory"", 22}, {""\n"", 1}]","10",,,,104,
-"1521889849.900895","exit_group",,0,1,"127",,,,,,,
